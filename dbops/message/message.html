@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" src="message.validation.js"></script>
+<body>
+<!--<form action="http://127.0.0.1:3003/message" method="POST">-->
+    <!--From Number: <input type="text" name="from_number"><br>-->
+<!--<br>-->
+    <!--To Number: <input type="text" name="to_number">-->
+    <!--<br><br>-->
+    <!--Message: <input type="text" name="message">-->
+    <!--<br><br>-->
+    <!--<input type="submit" value="Submit">-->
+<!--</form>-->
+
+
+<form name="htmlform" action="/message" onsubmit="return validateForm()" method="post">
+    <table width="450px">
+        </tr>
+        <tr>
+            <td valign="top">
+                <label for="telephone">From</label>
+            </td>
+            <td valign="top">
+                <input  type="text" name="from_number" maxlength="30" size="30">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <label for="telephone">To</label>
+            </td>
+            <td valign="top">
+                <input  type="text" name="to_number" maxlength="30" size="30">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <label for="message">Message*</label>
+            </td>
+            <td valign="top">
+                <textarea  name="message" maxlength="1000" cols="25" rows="6"></textarea>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="Submit">
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>
