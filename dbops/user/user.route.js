@@ -7,7 +7,9 @@ var validation =  require('../../dbops/user/user.validation.js');
 module.exports = function (app) {
 
     app.route('/user')
-        .get(userController.getUsers)
+        .get(validation.verifyToken,userController.getUsers)
         .post(validation.validateCreateUser,userController.createUser);
+    app.route('/authorise')
+        .post(userController.authorize);
 
 };

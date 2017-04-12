@@ -1,7 +1,8 @@
 /**
  * Created by bhavya on 8/5/16.
  */
-
+var dotenv = require('dotenv').config();
+var jwt    = require('jsonwebtoken');
 var error = {};
 /**
  * all validation goes here
@@ -31,3 +32,14 @@ exports.validateCreateUser = function (req,res,next) {
 
 };
 
+exports.verifyToken = function(req,res,next){
+    var tokenData = jwt.verify(req.query.token, process.env.JWTSIGNATURE);
+    console.log("tokenData",tokenData);
+    if(tokenData){
+        next();
+    }
+    else{
+        err.name='token is invalid';
+        next(err);
+    }
+};

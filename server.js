@@ -13,7 +13,9 @@ var app = express();
 //     res.sendFile( __dirname + "/dbops/message/" + "message.html" );
 // });
 
+app.all('*', function (req, res) {
 
+});
 app.use(function(err, req, res, next) {
 
     console.error(err,"errr");
