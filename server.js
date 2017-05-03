@@ -18,7 +18,7 @@ app.all('*', function (req, res) {
 });
 app.use(function(err, req, res, next) {
 
-    console.error(err,"errr");
+    console.log(err,"errr");
     res.status(500).send(err);
 
 });

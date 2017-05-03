@@ -22,12 +22,15 @@ var RegSchema = new schema({
     name: { type: String },
     email: { type: String },
     pass: { type: String },
-    num: { type: String, match: [/^[0-9]{10}$/, "Mobile number must be 10 digit"], required: true },
+    num: { type: String, match: [/^[0-9]{10}$/, "Mobile number must be 10 digit"], required: true, unique: true, sparse: true },
     reg_time : {
         type : Date, default: Date.now
     },
     address: UserAdd,
 }, { collection: 'user' });
-;
 
+RegSchema.on('error',function(err,data){
+    next(err);
+    return;
+})
 mongoose.model('user', RegSchema);

@@ -2,11 +2,13 @@
  * Created by bhavya on 8/4/16.
  */
 
-var userModel=require('mongoose').model('user');
+var userModel= require('mongoose').model('user');
+var accessModel=require('mongoose').model('access');
 var mongoose = require('mongoose');
 mongoose.Promise = require('q').Promise;
 var jwt    = require('jsonwebtoken');
 var dotenv = require('dotenv').config();
+
 
 /**
  * for creatind some new students in user collection
@@ -17,19 +19,28 @@ var responseMessage = {
     error: {}
 };
 
-exports.createUser = function (req,res,next) {
-
+exports.createUser = function (req,res,next) { 
     var user = new userModel(req.body);
-    user.save().then(function (results) {
-
-        res.status(200).json(results);
-
-    }).catch(null,function(err){
-
-        responseMessage.error = err;
-        res.status(500).json(responseMessage);
-
+    user.save(function (err, results) {
+        if(err) {
+            next({Error : "Duplicate Mobile Number"});
+            return;
+       }
+        var tokenData = jwt.sign({uid: results._id}, process.env.JWTSIGNATURE,  { expiresIn: '60 days' });
+        var access = new accessModel({token: tokenData,num: req.body.num});
+        access.save(function(err, accessRes){
+            res.status(200).json({accessRes});
+        });    
     });
+};
+
+exports.login = function (req,res,next) { 
+  var user = new User();
+  user.authorize(username, password).then(() => {
+
+  }).catch(()=>{
+
+  })
 };
 
 

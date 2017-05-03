@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 module.exports = function(){
-    var db = mongoose.connect('mongodb://localhost/user');
+    var db = mongoose.connect('mongodb://localhost/test');
     require('../dbops/user/user.model');
+    require('../dbops/access/access.model');
     return db;
 };
