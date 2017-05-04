@@ -21,7 +21,7 @@ var UserAdd = {
 var RegSchema = new schema({
     name: { type: String },
     email: { type: String },
-    pass: { type: String },
+    pass: { type: String, required: true },
     num: { type: String, match: [/^[0-9]{10}$/, "Mobile number must be 10 digit"], required: true, unique: true, sparse: true },
     reg_time : {
         type : Date, default: Date.now

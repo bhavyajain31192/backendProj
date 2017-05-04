@@ -21,31 +21,40 @@ var responseMessage = {
 
 exports.createUser = function (req,res,next) { 
     var user = new userModel(req.body);
-    user.save(function (err, results) {
-        if(err) {
+    userModel.findOne({ num: req.body.num }, function(err,userDetails){
+        if(!userDetails){
+            user.save(function (err, results) {
+                if(err) {
+                    next({Error : err});
+                    return;
+                }
+                var tokenData = jwt.sign({uid: results._id}, process.env.JWTSIGNATURE,  { expiresIn: '60 days' });
+                var access = new accessModel({token: tokenData,num: req.body.num});
+                access.save(function(err, accessRes){
+                    res.status(200).json({accessRes});
+                });    
+            });
+        }
+        else{
             next({Error : "Duplicate Mobile Number"});
-            return;
-       }
-        var tokenData = jwt.sign({uid: results._id}, process.env.JWTSIGNATURE,  { expiresIn: '60 days' });
-        var access = new accessModel({token: tokenData,num: req.body.num});
-        access.save(function(err, accessRes){
-            res.status(200).json({accessRes});
-        });    
-    });
+        }
+    })
 };
 
 exports.login = function (req,res,next) { 
-  var user = new User();
-  user.authorize(username, password).then(() => {
-
-  }).catch(()=>{
-
-  })
+    userModel.findOne({num: req.body.num, pass: req.body.pass}).then(function(results){
+        if(!results){
+            res.status(404).json({success:false}); 
+        }else{
+            res.status(200).json(results); 
+        }
+    }).catch(function(err){
+        res.status(400).json(err); 
+    })
 };
 
 
 exports.getUsers = function (req,res,next) {
-    console.log("hjfhdg");
     userModel.find().then(function(results){
         if(!results){
             res.status(404).json("No student Present");
