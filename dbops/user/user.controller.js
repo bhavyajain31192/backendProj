@@ -86,7 +86,6 @@ exports.authorize = function(req, res) {
                 // create a token
                 var token =  jwt.sign(user, process.env.JWTSIGNATURE, { expiresIn: '60 days' }) ;
 
-
                 // return the information including token as JSON
                 res.json({
                     success: true,

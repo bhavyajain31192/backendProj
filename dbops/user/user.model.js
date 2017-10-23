@@ -8,16 +8,6 @@ var mongoose = require('mongoose'),
 
 require('mongoose-assert')(mongoose);
 
-var UserAdd = {
-    type: { type: String, enum: ['billing', 'shipping'] },
-    address1: { type: String },
-    address2: { type: String },
-    city: { type: String },
-    country: { type: String },
-    state: { type: String },
-    zip: { type: String }
-};
-
 var RegSchema = new schema({
     name: { type: String },
     email: { type: String },
@@ -26,7 +16,7 @@ var RegSchema = new schema({
     reg_time : {
         type : Date, default: Date.now
     },
-    address: UserAdd,
+    roles: {type: Array},
 }, { collection: 'user' });
 
 RegSchema.on('error',function(err,data){

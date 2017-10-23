@@ -8,5 +8,6 @@ module.exports = function(){
     var db = mongoose.connect('mongodb://localhost/test');
     require('../dbops/user/user.model');
     require('../dbops/access/access.model');
+    require('../dbops/roles/role.model');
     return db;
 };
